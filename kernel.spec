@@ -19,7 +19,6 @@ Summary: The Linux kernel
 
 %global distro_build 1160
 
-%define rpmversion 3.10.0
 %define pkgrelease 1160.99.1.el7
 
 # allow pkg_release to have configurable %%{?dist} tag
@@ -28,7 +27,7 @@ Summary: The Linux kernel
 %define pkg_release %{specrelease}%{?buildid}
 
 # The kernel tarball/base version
-%define rheltarball %{rpmversion}-%{pkgrelease}
+%define rheltarball 3.10.0-%{pkgrelease}
 
 # What parts do we want to build?  We must build at least one kernel.
 # These are the kernels that are built IF the architecture allows it.
@@ -307,8 +306,8 @@ Summary: The Linux kernel
 # macros defined above.
 #
 %define kernel_reqprovconf \
-Provides: kernel = %{rpmversion}-%{pkg_release}\
-Provides: kernel-%{_target_cpu} = %{rpmversion}-%{pkg_release}%{?1:.%{1}}\
+Provides: kernel = 3.10.0-%{pkg_release}\
+Provides: kernel-%{_target_cpu} = 3.10.0-%{pkg_release}%{?1:.%{1}}\
 Provides: kernel-drm = 4.3.0\
 Provides: kernel-drm-nouveau = 16\
 Provides: kernel-modeset = 1\
@@ -335,7 +334,7 @@ Name: kernel%{?variant}
 Group: System Environment/Kernel
 License: GPLv2
 URL: http://www.kernel.org/
-Version: %{rpmversion}
+Version: 3.10.0
 Release: %{pkg_release}
 # DO NOT CHANGE THE 'ExclusiveArch' LINE TO TEMPORARILY EXCLUDE AN ARCHITECTURE BUILD.
 # SET %%nobuildarches (ABOVE) INSTEAD
@@ -393,7 +392,7 @@ BuildRequires: bison flex
 BuildRequires: glibc-static
 %endif
 
-Source0: https://github.com/NewsCentOS7/kernel/releases/download/download/linux-%{rpmversion}-%{pkgrelease}.tar.xz
+Source0: https://github.com/NewsCentOS7/kernel/releases/download/download/linux-3.10.0-%{pkgrelease}.tar.xz
 
 Source1: Makefile.common
 
@@ -1379,7 +1378,7 @@ find Documentation -type d | xargs chmod u+w
 cd linux-%{KVRA}
 
 %if %{with_doc}
-docdir=$RPM_BUILD_ROOT%{_datadir}/doc/kernel-doc-%{rpmversion}
+docdir=$RPM_BUILD_ROOT%{_datadir}/doc/kernel-doc-3.10.0
 man9dir=$RPM_BUILD_ROOT%{_datadir}/man/man9
 
 # copy the source over
@@ -1483,10 +1482,10 @@ make %{?cross_opts} ARCH=%{hdrarch} DESTDIR=$RPM_BUILD_ROOT bootwrapper_install 
 
 %if %{with_doc}
 # Red Hat UEFI Secure Boot CA cert, which can be used to authenticate the kernel
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}
-install -m 0644 %{SOURCE13} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}/kernel-signing-ca-20140212.cer
-install -m 0644 %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}/kernel-signing-ca-20200609.cer
-ln -s kernel-signing-ca-20200609.cer $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}/kernel-signing-ca.cer
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}
+install -m 0644 %{SOURCE13} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}/kernel-signing-ca-20140212.cer
+install -m 0644 %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}/kernel-signing-ca-20200609.cer
+ln -s kernel-signing-ca-20200609.cer $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}/kernel-signing-ca.cer
 %endif
 
 # We have to do the headers checksum calculation after the tools install because
@@ -1646,14 +1645,14 @@ fi
 %if %{with_doc}
 %files doc
 %defattr(-,root,root)
-%{_datadir}/doc/kernel-doc-%{rpmversion}/Documentation/*
-%dir %{_datadir}/doc/kernel-doc-%{rpmversion}/Documentation
-%dir %{_datadir}/doc/kernel-doc-%{rpmversion}
+%{_datadir}/doc/kernel-doc-3.10.0/Documentation/*
+%dir %{_datadir}/doc/kernel-doc-3.10.0/Documentation
+%dir %{_datadir}/doc/kernel-doc-3.10.0
 %{_datadir}/man/man9/*
-%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}/kernel-signing-ca-20140212.cer
-%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}/kernel-signing-ca-20200609.cer
-%{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}/kernel-signing-ca.cer
-%dir %{_datadir}/doc/kernel-keys/%{rpmversion}-%{pkgrelease}
+%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}/kernel-signing-ca-20140212.cer
+%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}/kernel-signing-ca-20200609.cer
+%{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}/kernel-signing-ca.cer
+%dir %{_datadir}/doc/kernel-keys/3.10.0-%{pkgrelease}
 %dir %{_datadir}/doc/kernel-keys
 %endif
 
